@@ -17,7 +17,6 @@ on:
 
 env:
   MIN_COV: 90
-  SETUP_DEP: false
 
 jobs:
   run:
@@ -57,7 +56,7 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: ${{ env.SETUP_DEP }}
+        if: false
         run: |
           sh install_Company_dependencies.sh
       
@@ -72,7 +71,7 @@ jobs:
       - name: Run PyTest & Generate Coverage Report  
         run: |  
           coverage run -m pytest -v -s --junitxml=test-results.xml
-          coverage report -m --fail-under=${{ env.MIN_COV }}
+          coverage report -m --fail-under=$MIN_COV
 
       # Comment test result on commmit
       - name: Publish Test Results
