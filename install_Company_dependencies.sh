@@ -1,7 +1,8 @@
 # this would work to install from scratch or update a folder that already exists
 # IMPORTANT - if updating existing folders - the git directories should be clean (no uncommitted changes) before running this script 
-pwd
-cd ~
+ssh -T git@github.com
+ls ~/.ssh/
+
 pwd
 DEVDIR=Company
 mkdir -p $DEVDIR
