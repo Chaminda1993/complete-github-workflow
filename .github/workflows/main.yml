@@ -68,7 +68,7 @@ jobs:
       - name: Run PyTest & Generate Coverage Report  
         run: |  
           coverage run -m pytest -v -s --junitxml=test-results.xml
-          coverage report -m --fail-under=90
+          coverage report -m --fail-under=98
 
       # Comment test result on commmit
       - name: Publish Test Results
