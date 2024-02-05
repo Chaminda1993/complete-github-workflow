@@ -53,7 +53,7 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: ${{ env.DEP_TOKEN != '' }}
+        if: ${{ secrets.DEP_TOKEN != '' }}
         run: |
           sh install_Company_dependencies.sh
       
@@ -68,7 +68,11 @@ jobs:
       - name: Run PyTest & Generate Coverage Report  
         run: |  
           coverage run -m pytest -v -s --junitxml=test-results.xml
-          coverage report -m --fail-under=98
+
+      - name: Check minimum coverage
+        if: ${{ env.MIN_COV != '' }}
+        run: |
+          coverage report -m --fail-under=${{env.MIN_COV}}
 
       # Comment test result on commmit
       - name: Publish Test Results
