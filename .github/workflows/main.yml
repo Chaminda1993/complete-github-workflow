@@ -16,7 +16,7 @@ on:
       - main
 
 env:
-  MIN_COV: 90
+  MIN_COV: 98
 
 jobs:
   run:
@@ -60,7 +60,7 @@ jobs:
         run: |
           sh install_Company_dependencies.sh
       
-      - name: Configure dependancies & Run PyTest
+      - name: Configure dependancies
         run: |
           pip install .
           pip install pytest pytest-cov pytest-html
