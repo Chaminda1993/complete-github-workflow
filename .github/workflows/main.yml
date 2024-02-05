@@ -15,6 +15,10 @@ on:
     branches:
       - main
 
+env:
+  MIN_COV: 90
+  SETUP_DEP: false
+
 jobs:
   run:
     runs-on: ${{ matrix.os }}
@@ -53,7 +57,7 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: false
+        if: ${{ env.SETUP_DEP }}
         run: |
           sh install_Company_dependencies.sh
       
@@ -68,10 +72,6 @@ jobs:
       - name: Run PyTest & Generate Coverage Report  
         run: |  
           coverage run -m pytest -v -s --junitxml=test-results.xml
-
-      - name: Check minimum coverage
-        if: ${{ env.MIN_COV != '' }}
-        run: |
           coverage report -m --fail-under=${{ env.MIN_COV }}
 
       # Comment test result on commmit
