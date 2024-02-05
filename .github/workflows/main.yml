@@ -45,7 +45,7 @@ jobs:
         with:
           args: "--fix --no-unsafe-fixes --no-cache"
 
-      # Setup Python environtment & PyTest
+      # Setup Python environtment
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -63,8 +63,12 @@ jobs:
           pip install pytest pytest-cov pytest-html
           pip install datasets==2.15.0
           pip list
-          pytest -s -v test --junitxml=test-results.xml
-          cat test-results.xml
+
+      # PyTest and coverage
+      - name: Run PyTest & Generate Coverage Report  
+        run: |  
+          coverage run -m pytest -v -s --junitxml=test-results.xml
+          coverage report -m --fail-under=90
 
       # Comment test result on commmit
       - name: Publish Test Results
@@ -72,12 +76,6 @@ jobs:
         with:
           files: test-results.xml
 
-      - name: Test coverage
-        run: |  
-          coverage run -m pytest  -v -s  
-      - name: Generate Coverage Report  
-        run: |  
-          coverage report -m
 
       # Commit & push changes
       - name: Check for modified files
