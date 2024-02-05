@@ -53,7 +53,7 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: ${{ secrets.DEP_TOKEN }} != null
+        if: ${{ env.super_secret != '' }}
         run: |
           sh install_Company_dependencies.sh
       
