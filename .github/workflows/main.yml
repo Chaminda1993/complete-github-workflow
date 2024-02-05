@@ -53,7 +53,7 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: ${{ secrets.DEP_TOKEN }} != ''
+        if: false
         run: |
           sh install_Company_dependencies.sh
       
@@ -72,7 +72,7 @@ jobs:
       - name: Check minimum coverage
         if: ${{ env.MIN_COV != '' }}
         run: |
-          coverage report -m --fail-under=${{env.MIN_COV}}
+          coverage report -m --fail-under=${{ env.MIN_COV }}
 
       # Comment test result on commmit
       - name: Publish Test Results
