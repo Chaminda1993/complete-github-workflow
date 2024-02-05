@@ -46,14 +46,14 @@ jobs:
           args: "--fix --no-unsafe-fixes --no-cache"
 
       # Setup Python environtment & PyTest
-      - name: Setup Python
+      - name: Setup Pythongit
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
 
       - name: Configure company dependancies
-        if: secrets.DEP_TOKEN != null
+        if: ${{ secrets.DEP_TOKEN }} != null
         run: |
           sh install_Company_dependencies.sh
       
