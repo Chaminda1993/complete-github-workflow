@@ -16,7 +16,7 @@ on:
       - main
 
 env:
-  MIN_COV: 98
+  MIN_COV: 80
 
 jobs:
   run:

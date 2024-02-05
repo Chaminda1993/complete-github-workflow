@@ -15,6 +15,9 @@ on:
     branches:
       - main
 
+env:
+  MIN_COV: 80
+
 jobs:
   run:
     runs-on: ${{ matrix.os }}
@@ -45,7 +48,7 @@ jobs:
         with:
           args: "--fix --no-unsafe-fixes --no-cache"
 
-      # Setup Python environtment & PyTest
+      # Setup Python environtment
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -53,23 +56,28 @@ jobs:
           cache: 'pip'
 
       - name: Configure company dependancies
+        if: false
         run: |
           sh install_Company_dependencies.sh
       
-      - name: Configure dependancies & Run PyTest
+      - name: Configure dependancies
         run: |
           pip install .
           pip install pytest pytest-cov pytest-html
           pip install datasets==2.15.0
           pip list
-          pytest -s -v test --junitxml=test-results.xml
-          cat test-results.xml
+
+      # PyTest and coverage
+      - name: Run PyTest & Generate Coverage Report  
+        run: |  
+          coverage run -m pytest -v -s --junitxml=test-results.xml
+          coverage report -m --fail-under=$MIN_COV
 
       # Comment test result on commmit
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: test-results.xml     
+          files: test-results.xml
 
       # Commit & push changes
       - name: Check for modified files
